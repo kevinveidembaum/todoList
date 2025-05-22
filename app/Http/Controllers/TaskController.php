@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Resources\TaskResource;
@@ -49,6 +50,12 @@ class TaskController extends Controller
 
             Log::info('Task Updated Successfully');
             return new TaskResource($task);
+        } catch (ModelNotFoundException $e) {
+            Log::error("Task not found: id {$id}");
+
+            return response()->json([
+                'message' => 'Task not Found.',
+            ], 404);
         } catch (Exception $e) {
             Log::error($e);
 
