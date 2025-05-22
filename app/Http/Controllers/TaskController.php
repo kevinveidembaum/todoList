@@ -24,17 +24,36 @@ class TaskController extends Controller
     {
         Log::info("Create Task");
 
-        try
-        {
+        try {
             $task = $this->taskService->new($request->validated());
 
             Log::info('Task Created Successfully');
             return new TaskResource($task);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             Log::error($e);
 
             return response()->json([
                 'message' => 'An error occurred while saving new Task!',
+                'data'    => [],
+            ], 500);
+        }
+    }
+
+    /*
+    * Update a Task
+    */
+    public function update(StoreTaskRequest $request, $id)
+    {
+        try {
+            $task = $this->taskService->update($request->validated(), $id);
+
+            Log::info('Task Updated Successfully');
+            return new TaskResource($task);
+        } catch (Exception $e) {
+            Log::error($e);
+
+            return response()->json([
+                'message' => 'An error occurred while updating a Task!',
                 'data'    => [],
             ], 500);
         }
