@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Services\TaskService;
-use PhpParser\Node\Stmt\TryCatch;
 
 class TaskController extends Controller
 {
@@ -17,6 +16,12 @@ class TaskController extends Controller
     public function __construct(TaskService $taskService)
     {
         $this->taskService = $taskService;
+    }
+
+    public function index()
+    {
+        $tasks = $this->taskService->listAll();
+        return response()->json($tasks);
     }
 
     /**

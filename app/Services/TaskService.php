@@ -50,4 +50,16 @@ class TaskService
             Task::findOrFail($id)->firstOrFail()->delete();
         });
     }
+
+
+    /*
+    * List all Tasks
+    */
+    public function listAll()
+    {
+        Log::info('Retrieving all tasks');
+        $tasks = Task::orderBy('created_at', 'desc')->get();
+        Log::info('Tasks retrieved successfully', ['count' => $tasks->count()]);
+        return $tasks;
+    }
 }
