@@ -39,4 +39,15 @@ class TaskService
             return $task;
         });
     }
+
+
+    /*
+    * Delete a Task
+    */
+    public function delete($id)
+    {
+        return DB::transaction(function () use ($id) {
+            Task::findOrFail($id)->firstOrFail()->delete();
+        });
+    }
 }
