@@ -53,7 +53,7 @@ class TaskController extends Controller
     {
         Log::info("Update Task");
         try {
-            $task = $this->taskService->update($request->validated(), $id);
+            $task = $this->taskService->update($request->all(), $id);
 
             Log::info('Task Updated Successfully');
             return new TaskResource($task);
